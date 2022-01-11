@@ -24,7 +24,7 @@
 void receivePosixQueueMessage()
 {
   // Open Posix Message Queue read only
-  mqd_t mqd = mq_open("/mas418queue", O_RDONLY);
+  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_RDONLY); // Receiver creates queue.
   assert(-1 != mqd);
 
   // Get attributes into attr
