@@ -13,6 +13,9 @@
 // Remember, link with -lrt:
 // gcc hello_sender.c -lrt -o hello_sender
 
+
+#include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>           /* For O_* constants */
 #include <sys/stat.h>        /* For mode constants */
 #include <mqueue.h>
@@ -21,7 +24,7 @@
 void sayHelloToOtherProcess()
 {
   // Open queue
-  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_EXCL | O_WRONLY,  0600, NULL);
+  mqd_t mqd = mq_open("/mas418queue", O_EXCL | O_WRONLY,  0600, NULL);
 
   // Check if queue created successfully.
   if (mqd == -1)
