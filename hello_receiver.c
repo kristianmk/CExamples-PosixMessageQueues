@@ -23,7 +23,7 @@
 void receivePosixQueueMessage()
 {
   // Open Posix Message Queue read only
-  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_RDONLY, 0666, NULL; // Receiver creates queue.
+  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_RDONLY, 0666, NULL); // Receiver creates queue.
   if (-1 == mqd) {
     printf("Error description from mq_open create: %s\n", strerror(errno));
     exit(1);
