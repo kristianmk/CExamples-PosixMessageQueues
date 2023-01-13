@@ -6,9 +6,6 @@
 // Remember creating the queue before using it, as described here:
 // http://manpages.ubuntu.com/manpages/focal/man7/mq_overview.7.html
 //
-// As super user (sudo):
-// mkdir /dev/mas418queue
-// mount -t mqueue none /dev/mas418queue
 //
 // Remember, link with -lrt:
 // gcc hello_receiver.c -lrt -o hello_receiver
@@ -19,13 +16,19 @@
 #include <fcntl.h>      // For O_* constants
 #include <sys/stat.h>   // For mode constants
 #include <mqueue.h>
+#include <errno.h>
+#include <string.h>
 
 
 void receivePosixQueueMessage()
 {
   // Open Posix Message Queue read only
-  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_RDONLY); // Receiver creates queue.
-  assert(-1 != mqd);
+  mqd_t mqd = mq_open("/mas418queue", O_CREAT | O_RDONLY, 0666, NULL; // Receiver creates queue.
+  if (-1 == mqd) {
+    printf("Error description from mq_open create: %s\n", strerror(errno));
+    exit(1);
+  }
+
 
   // Get attributes into attr
   struct mq_attr attr;
@@ -60,7 +63,7 @@ void receivePosixQueueMessage()
 int main()
 {
   
-  printf("Starting up receiver..");
+  printf("Starting up receiver..\n");
   
   receivePosixQueueMessage();
 
