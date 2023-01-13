@@ -3,9 +3,6 @@
 // Hello world using Posix message queues. This is the receiver.
 // Ubuntu manual for mq_open here: http://manpages.ubuntu.com/manpages/focal/man3/mq_open.3.html
 //
-// Remember creating the queue before using it, as described here:
-// http://manpages.ubuntu.com/manpages/focal/man7/mq_overview.7.html
-//
 //
 // Remember, link with -lrt:
 // gcc hello_receiver.c -lrt -o hello_receiver
