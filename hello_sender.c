@@ -6,9 +6,6 @@
 // Remember creating the queue before using it, as described here:
 // http://manpages.ubuntu.com/manpages/focal/man7/mq_overview.7.html
 //
-// As super user (sudo):
-// mkdir /dev/mas418queue
-// mount -t mqueue none /dev/mas418queue
 //
 // Remember, link with -lrt:
 // gcc hello_sender.c -lrt -o hello_sender
@@ -40,6 +37,9 @@ void sayHelloToOtherProcess()
   
   // Close queue
   mq_close(mqd);
+
+  // Unlink queue
+  mq_unlink("/mas418queue");
 }
 
 
