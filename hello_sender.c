@@ -1,10 +1,10 @@
 // Written by K. M. Knausgård 2022-01.
 //
 // Hello world using Posix message queues. This is the sender.
-// Ubuntu manual for mq_open here: http://manpages.ubuntu.com/manpages/focal/man3/mq_open.3.html
+// Ubuntu manual for mq_open here: https://manpages.ubuntu.com/manpages/noble/man3/mq_open.3.html
 //
 // Remember creating the queue before using it, as described here:
-// http://manpages.ubuntu.com/manpages/focal/man7/mq_overview.7.html
+// https://manpages.ubuntu.com/manpages/noble/man7/mq_overview.7.html
 //
 //
 // Remember, link with -lrt:
