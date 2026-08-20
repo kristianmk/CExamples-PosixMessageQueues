@@ -1,6 +1,18 @@
 # CExamples-PosixMessageQueues
-Small Posix Message Queues example for MAS418 lab.
+Small POSIX Message Queues example for the MAS418 lab.
 
-Remember link with -lrt !
+Build both programs:
 
-One sender and one receiver. Compile and run both, start the receiver end first.
+```sh
+gcc -std=c17 -Wall -Wextra -Wpedantic hello_receiver.c -o hello_receiver -lrt
+gcc -std=c17 -Wall -Wextra -Wpedantic hello_sender.c -o hello_sender -lrt
+
+Run the receiver and sender in separate terminals. Start the receiver first:
+
+./hello_receiver
+./hello_sender
+
+The receiver creates and removes the message queue. If a receiver is interrupted
+and leaves the queue behind, remove it before starting another receiver:
+
+rm /dev/mqueue/mas418queue
