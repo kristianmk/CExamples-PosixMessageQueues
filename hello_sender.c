@@ -7,8 +7,7 @@
 // https://manpages.ubuntu.com/manpages/noble/man7/mq_overview.7.html
 //
 //
-// Remember, link with -lrt:
-// gcc hello_sender.c -lrt -o hello_sender
+// Remember, link with -lrt
 
 #include <stdio.h>
 #include <stdlib.h>
