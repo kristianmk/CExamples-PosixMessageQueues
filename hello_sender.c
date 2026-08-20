@@ -1,6 +1,6 @@
 // Written by K. M. Knausgård 2022-01.
 //
-// Hello world using Posix message queues. This is the sender.
+// Hello world using POSIX message queues. This is the sender.
 // Ubuntu manual for mq_open here: https://manpages.ubuntu.com/manpages/noble/man3/mq_open.3.html
 //
 // Remember creating the queue before using it, as described here:
@@ -10,45 +10,49 @@
 // Remember, link with -lrt:
 // gcc hello_sender.c -lrt -o hello_sender
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>           /* For O_* constants */
-#include <sys/stat.h>        /* For mode constants */
 #include <mqueue.h>
 
 
-void sayHelloToOtherProcess()
+void sayHelloToOtherProcess(void)
 {
   // Open queue
-  mqd_t mqd = mq_open("/mas418queue", O_EXCL | O_WRONLY,  0600, NULL);
+  mqd_t mqd = mq_open("/mas418queue", O_WRONLY);
 
-  // Check if queue created successfully.
-  if (mqd == -1)
+  // Check if queue opened successfully.
+  if (mqd == (mqd_t)-1)
   {
     perror("mq_open failed!");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
-  
-  // Send message with priority 11.
-  // The specifications requires at least priorities 0 to 31 to be available.
-  // See the manual for information on high/low priorities!
-  mq_send(mqd, "Hello world!", 13, 11); // Length 13 including string termination character.
-  
-  // Close queue
-  mq_close(mqd);
 
-  // Unlink queue
-  mq_unlink("/mas418queue");
+  // Send message with priority 11.
+  // The specification requires at least priorities 0 to 31 to be available.
+  // See the manual for information on high/low priorities!
+  const char message[] = "Hello world!";
+  if (mq_send(mqd, message, sizeof(message), 11) == -1)
+  {
+    perror("mq_send failed");
+    mq_close(mqd);
+    exit(EXIT_FAILURE);
+  }
+
+  // Close queue
+  if (mq_close(mqd) == -1)
+  {
+    perror("mq_close failed");
+    exit(EXIT_FAILURE);
+  }
 }
 
 
-int main()
+int main(void)
 {
-  
-  printf("Starting up..");
-  
+  printf("Starting up sender..\n");
+
   sayHelloToOtherProcess();
 
-  return 0;
+  return EXIT_SUCCESS;
 }
